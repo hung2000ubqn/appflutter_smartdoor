@@ -12,8 +12,6 @@ class MQTTManager extends ChangeNotifier {
   final MqttServerClient _client =
   MqttServerClient.withPort('broker.hivemq.com', 'd907fcce80ca418d9b29fe0c8b8e9e21', 1883);
   String _topic = "hung_boxremote";
-  String _topic1 = "flutter_test1";
-  var data1;
 
   void initializeMQTTClient() {
     // Save the values
@@ -68,11 +66,6 @@ class MQTTManager extends ChangeNotifier {
     _client.publishMessage(topic, MqttQos.exactlyOnce, builder.payload!);
   }
 
-
-  /*int getData() {
-    final test = Test.fromJson(data1);
-    return test.data;
-  }*/
 
 
   /// The subscribed callback
@@ -138,7 +131,6 @@ class MQTTManager extends ChangeNotifier {
   /// Unsubscribe from a topic
   void unSubscribeFromCurrentTopic() {
     _client.unsubscribe(_topic);
-    _client.unsubscribe(_topic1);
   }
 
   void updateState() {

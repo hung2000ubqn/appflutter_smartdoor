@@ -6,13 +6,20 @@ class DatabaseService {
   DatabaseService({this.uid});
 
   // collection reference
-  final CollectionReference smartDoorCollection = FirebaseFirestore.instance.collection('smartdoor');
+  final CollectionReference smartDoorCollection = FirebaseFirestore.instance.collection('users1');
 
-  Future updateUserData(String name, String id, int warning) async {
+  Future addUserDetails(String fullName, String email) async {
+    await FirebaseFirestore.instance.collection('users1').add({
+      'Full Name': fullName,
+      'Email': email,
+    });
+    print(this.uid);
+  }
+
+  Future updateUserData(String fullName, String email) async {
     return await smartDoorCollection.doc(uid).set({
-      'name': name,
-      'id': id,
-      'warning': warning,
+      'Full Name': fullName,
+      'Email': email,
     });
   }
 

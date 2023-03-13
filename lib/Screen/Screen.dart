@@ -28,11 +28,6 @@ class CardControl extends StatefulWidget {
 }
 
 class _CardControlState extends State<CardControl> {
-  // String parse_json_data(int data) {
-  //   String jsonData = "";
-  //   jsonData = "{\"data\":$data}";
-  //   return jsonData;
-  // }
   void blinkButton() {
     setState(() {
       widget.colorChange = !widget.colorChange;
@@ -41,11 +36,9 @@ class _CardControlState extends State<CardControl> {
 
   void up() {
     setState(() {
-        //textHolder = 'UP';
         print(2);
         upload(widget.id,2,widget.idRemote);
     });
-
     // _manager.publish(parse_json_data(get_data_device()),"test");
   }
 
@@ -55,7 +48,6 @@ class _CardControlState extends State<CardControl> {
         print(3);
         upload(widget.id,3,widget.idRemote);
     });
-    // _manager.publish(parse_json_data(get_data_device()),"test");
   }
 
   void stop() {
@@ -64,8 +56,6 @@ class _CardControlState extends State<CardControl> {
         print(4);
         upload(widget.id,4,widget.idRemote);
     });
-
-    //  _manager.publish(parse_json_data(get_data_device()),"test");
   }
 
   void power() {
@@ -77,43 +67,13 @@ class _CardControlState extends State<CardControl> {
       }
     });
     print(0);
-    //print(widget.manager.data);
-    //upload(widget.id,get_data_device(),widget.idRemote);
-    // _manager.publish(parse_json_data(get_data_device()),"test");
   }
 
-  int get_data_device() {
-    int data = 0;
-    if (widget.state_d1) {
-      data += 1;
-    } else {
-      data += 0;
-    }
-    if (widget.state_d2) {
-      data += 2;
-    } else {
-      data += 0;
-    }
-    if (widget.state_d3) {
-      data += 4;
-    } else {
-      data += 0;
-    }
-    if (widget.state_d4) {
-      data += 8;
-    } else {
-      data += 0;
-    }
-    return data;
-  }
 
   String textHolder = 'Door closed';
 
   void textFunction() {
-    //int data = widget.manager.currentState.getdata;
-    //widget.manager.currentState.cc();
     print(widget.manager.currentState.getdata);
-    //print(widget.manager.currentState.getId);
     setState(() {
       if (widget.state_d1) {
         switch (widget.manager.currentState.getdata) {
@@ -127,7 +87,6 @@ class _CardControlState extends State<CardControl> {
         textHolder = 'POWER OFF';
       }
     });
-
   }
 
   @override
@@ -164,11 +123,7 @@ class _CardControlState extends State<CardControl> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      //textFunction();
                       up();
-                      //textHolder = 'UP';
-                      //print('1');
-                      //upload(widget.id, 1, widget.idRemote);
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 24),
@@ -196,10 +151,6 @@ class _CardControlState extends State<CardControl> {
                     onTap: () {
                       widget.state_d4 = !widget.state_d4;
                       power();
-                      //textFunction();
-                      //widget.state_d1 = !widget.state_d1;
-                      //print('0');
-                      //upload(widget.id, 0, widget.idRemote);
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 24),
@@ -235,7 +186,6 @@ class _CardControlState extends State<CardControl> {
                   GestureDetector(
                     onTap: () {
                       down();
-                      //textFunction();
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 24),
@@ -260,7 +210,6 @@ class _CardControlState extends State<CardControl> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      //textFunction();
                       stop();
                     },
                     child: Container(
@@ -298,19 +247,18 @@ class _CardControlState extends State<CardControl> {
     var jsonData = '''{"id": $id,"control_data": $data,"id_remote": $idRemote}''';
   
     try {
-      //widget.manager.subScribeTo("hung_appflutter");
       widget.manager.publish(jsonData, "hung_appflutter");
     } on Exception catch (e) {
       print(e.toString());
     }
   }
 
-  void retrieve(int data, int doorStatus, int fireStatus, String idRemote) {
+  /*void retrieve(int data, int doorStatus, int fireStatus, String idRemote) {
     try {
       print(widget.manager.data1);
 
     } on Exception catch (e) {
       print(e.toString());
     }
-  }
+  }*/
 }

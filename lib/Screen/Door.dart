@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../MQTT/MQTTManager.dart';
+import 'package:appflutter/services/auth.dart';
 
 class DoorControl extends StatefulWidget {
   DoorControl(
@@ -11,11 +12,15 @@ class DoorControl extends StatefulWidget {
   String textTest = 'NO ACT';
   bool colorChange = false;
 
+
   @override
   State<DoorControl> createState() => _DoorControlState();
 }
 
 class _DoorControlState extends State<DoorControl> {
+  String myEmail = '';
+  String myFullName = '';
+  //final AuthService _authUser = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +42,23 @@ class _DoorControlState extends State<DoorControl> {
                     )
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 22),
               Center(
-                /*child: Image.asset(
-                  'assets/cua_cuon.jpg',
-                  height: 200.0,
-                  width: 200.0,
-                ),*/
+                child: FutureBuilder(
+                  future: _retrieve(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState != ConnectionState.done)
+                      return Text("Loading data ...");
+                    return Text(
+                        "Hi $myFullName",
+                      style: TextStyle(
+                        fontSize: 36,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.redAccent,
+                      ),
+                    );
+                  },
+                ),
               ),
               const SizedBox(height: 32),
               Center(
@@ -84,5 +99,19 @@ class _DoorControlState extends State<DoorControl> {
         )
       ],
     );
+  }
+  _retrieve() async {
+    final currentUser = FirebaseAuth.instance;
+    if (currentUser != null)
+      await FirebaseFirestore.instance
+          .collection('users1')
+          .doc(currentUser.currentUser!.uid)
+          .get()
+          .then((ds){
+        myFullName = ds.data()!['Full Name'];
+        myEmail = ds.data()!['Email'];
+      }).catchError((e) {
+        print(e);
+      });
   }
 }

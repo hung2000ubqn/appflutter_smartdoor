@@ -1,3 +1,4 @@
+import 'package:appflutter/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -23,10 +24,8 @@ class _RegisterState extends State<Register> {
   final confirmedpasswordController = TextEditingController();
   final fullnameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  //var email = '';
-  //var password = '';
   var error = '';
-  //var username = '';
+  final currentUser = FirebaseAuth.instance;
 
   @override
   void dispose() {
@@ -42,20 +41,9 @@ class _RegisterState extends State<Register> {
       await _authTest.registerWithEmailAndPassword(
         emailController.text.trim(),
         passwordController.text.trim(),
-      );
-      // add user details
-      addUserDetails(
         fullnameController.text.trim(),
-        emailController.text.trim(),
       );
     }
-  }
-
-  Future addUserDetails(String fullName, String email) async {
-    await FirebaseFirestore.instance.collection('users').add({
-      'Full Name': fullName,
-      'Email': email,
-    });
   }
 
   bool passwordConfirmed() {
@@ -109,7 +97,6 @@ class _RegisterState extends State<Register> {
                     validator: (val) => val!.isEmpty ? "Enter Full Name" : null,
                     onChanged: (val) {
                       setState(() {
-                        //username = val;
                       });
                     },
                   ),
@@ -120,7 +107,6 @@ class _RegisterState extends State<Register> {
                     validator: (val) => val!.isEmpty ? "Enter an email" : null,
                     onChanged: (val) {
                       setState(() {
-                        //email = val;
                       });
                     }
                   ),
@@ -132,7 +118,6 @@ class _RegisterState extends State<Register> {
                     obscureText: true,
                     onChanged: (val) {
                       setState(() {
-                        //password = val;
                       });
                     },
                   ),
@@ -144,7 +129,6 @@ class _RegisterState extends State<Register> {
                     obscureText: true,
                     onChanged: (val) {
                       setState(() {
-                        //password = val;
                       });
                     },
                   ),

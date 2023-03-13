@@ -12,17 +12,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import '../Model/user.dart';
 
-/*void main() => runApp(MaterialApp(
-  home: Home(),
-));*/
 
-/*void main() {
-  setupLocator();
-  runApp(const MyApp());
-}*/
 Future <void> main()async{
   setupLocator();
-  //await service_locator.allReady();
   WidgetsFlutterBinding.ensureInitialized();
   FirebaseApp app = await Firebase.initializeApp();
   runApp(const MyApp());

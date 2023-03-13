@@ -26,6 +26,7 @@ class _MainScreenState extends State<MainScreen> {
   //final AuthService _auth = AuthService();
 
 
+
   @override
   void dispose() {
     // ignore: todo
@@ -87,5 +88,6 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
+
 }
 

@@ -54,15 +54,10 @@ class MQTTAppState {
   }
 
   void setReceivedText(var text) {
-    //_receivedText = text;
-    // _historyText = _historyText + '\n' + _receivedText;
     final json = jsonDecode(text);
     final remote = Remote.fromJson(json);
 
-
     idRemote = remote.idRemote;
-    //id = test.id;
-    //doorStatus = remote.doorStatus;
     fireStatus = remote.fireStatus;
     data = remote.data;
     switch (data) {
@@ -71,7 +66,6 @@ class MQTTAppState {
       case 4: textTest = 'DOOR IS STOPPED'; break;
       default: textTest = 'NO ACTION'; break;
     }
-    //ConvertToBool(data);
   }
 
   void setAppConnectionState(MQTTAppConnectionState state) {
